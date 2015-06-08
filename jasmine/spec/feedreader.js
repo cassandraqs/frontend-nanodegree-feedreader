@@ -26,7 +26,6 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
@@ -43,8 +42,6 @@ $(function() {
                 expect(feed.url.length).not.toBe(0);
             });
          });
-
-
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
@@ -64,7 +61,6 @@ $(function() {
             });
          });
     });
-
 
     /* TODO: Write a new test suite named "The menu" */
         /* TODO: Write a test that ensures the menu element is
@@ -93,12 +89,11 @@ $(function() {
 
         it('changes visibility on another click', function() {
             expect($('body').hasClass('menu-hidden')).toBe(true);
+            // restore menu to hidden status
             $('.menu-icon-link').click();
         });
 
     });
-
-
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
@@ -114,11 +109,9 @@ $(function() {
 
         });
         it('has at least one entry', function() {
-            var entries = $(".feed").has(".entry");
-            expect(entries.length).toBeGreaterThan(0);
+            expect(($(".feed").has(".entry")).length).toBeGreaterThan(0);
         });
     });
-
 
     /* TODO: Write a new test suite named "New Feed Selection"
 
@@ -126,4 +119,18 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+    describe('New Feed Selection', function(done) {
+        // store original content in originalFeed.
+        var originalFeed;
+        beforeEach(function(done) {
+            loadFeed(1,done);
+            originalFeed = $('.feed').html();
+        });
+        it('content changed', function(done) {
+        // compare the new content to the original content after a new feed loaded
+            expect($('.feed').html()).not.toEqual(originalFeed);
+            // restore original feed
+            loadFeed(0, done);
+        });
+    });
 }());
